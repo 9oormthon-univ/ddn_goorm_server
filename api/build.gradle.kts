@@ -6,8 +6,8 @@ val bootJar: BootJar by tasks
 bootJar.enabled = true
 jar.enabled = false
 
-/*
+
 dependencies {
+    implementation(project(":domain"))
 }
 
- */
