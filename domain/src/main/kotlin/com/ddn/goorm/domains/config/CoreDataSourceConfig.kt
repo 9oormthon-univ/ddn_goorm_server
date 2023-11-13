@@ -1,5 +1,5 @@
 package com.ddn.goorm.domains.config
-
+/*
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Qualifier
@@ -20,3 +20,5 @@ internal class CoreDataSourceConfig {
         return HikariDataSource(config)
     }
 }
+
+ */

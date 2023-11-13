@@ -1,4 +1,6 @@
 package com.ddn.goorm.domains.post.comment
 
-interface CommentRepository {
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface CommentRepository : JpaRepository<Comment, Long> {
 }

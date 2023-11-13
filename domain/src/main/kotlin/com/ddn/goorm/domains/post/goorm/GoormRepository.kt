@@ -1,4 +1,6 @@
 package com.ddn.goorm.domains.post.goorm
 
-interface GoormRepository {
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface GoormRepository : JpaRepository<Goorm, Long> {
 }
