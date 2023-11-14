@@ -7,11 +7,11 @@ data class SignUpReq (
     var nickname: String,
     var password: String
 ) {
-    fun toEntity() : Account {
+    fun toEntity(encryptPassword: String) : Account {
         return Account(
             email = this.email,
             nickname = this.nickname,
-            password = this.password
+            password = encryptPassword
         )
     }
 }
