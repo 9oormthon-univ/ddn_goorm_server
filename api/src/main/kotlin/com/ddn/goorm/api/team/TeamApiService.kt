@@ -45,7 +45,6 @@ class TeamApiService (
 
     fun createTeam(account: Account, req: TeamCreateReq): Team {
         val team: Team = teamDomainService.createTeam(req.toEntity())
-        val leader: Member = memberDomainService.createMember(team, account, Role.ROLE_LEADER)
         return team
     }
 

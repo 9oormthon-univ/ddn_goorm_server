@@ -15,7 +15,7 @@ class MemberDomainService(
 ) {
     @Transactional(readOnly = true)
     fun findMemberByAccountAndTeamId(account: Account, team: Long): Member {
-        return memberRepository.findMemberByAccountAndTeam_Id(account, team)
+        return memberRepository.findDistinctByAccountAndTeam_Id(account, team)
             .orElseThrow{IllegalArgumentException("가입하지 않은 팀입니다.")};
     }
 
