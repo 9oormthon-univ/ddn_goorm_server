@@ -48,4 +48,8 @@ class TeamApiService (
         val leader: Member = memberDomainService.createMember(team, account, Role.ROLE_LEADER)
         return team
     }
+
+    fun findTeamById(id: Long): Team {
+        return teamDomainService.findById(id)
+    }
 }

@@ -12,4 +12,9 @@ class TeamDomainService (
         return teamRepository.save(entity)
     }
 
+    fun findById(id: Long): Team {
+        return teamRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("유효하지 않은 팀입니다.") }
+    }
+
 }

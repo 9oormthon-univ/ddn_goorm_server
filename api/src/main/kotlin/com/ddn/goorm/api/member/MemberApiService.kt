@@ -15,4 +15,8 @@ class MemberApiService (
     fun createMember(account: Account, team: Team, role: Role): Member {
         return memberDomainService.createMember(team, account, role)
     }
+
+    fun existsByLeaderAndTeamId(account: Account, team: Long): Boolean {
+        return memberDomainService.existsByLeaderAndTeamId(account, team)
+    }
 }

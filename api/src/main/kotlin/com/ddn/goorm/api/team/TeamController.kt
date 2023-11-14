@@ -1,9 +1,11 @@
 package com.ddn.goorm.api.team
 
 import com.ddn.goorm.admin.annotation.AuthAccount
+import com.ddn.goorm.api.account.AccountApiService
 import com.ddn.goorm.api.account.dto.response.TokenRes
 import com.ddn.goorm.api.member.MemberApiService
 import com.ddn.goorm.api.team.dto.request.TeamCreateReq
+import com.ddn.goorm.api.team.dto.request.TeamInviteReq
 import com.ddn.goorm.api.team.dto.request.TeamJoinReq
 import com.ddn.goorm.api.team.dto.response.TeamJoinRes
 import com.ddn.goorm.api.team.dto.response.TeamRes
@@ -11,6 +13,7 @@ import com.ddn.goorm.common.enums.Role
 import com.ddn.goorm.common.response.ResponseCode
 import com.ddn.goorm.common.response.SuccessResponse
 import com.ddn.goorm.domains.account.Account
+import com.ddn.goorm.domains.group.member.Member
 import com.ddn.goorm.domains.group.team.Team
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/teams")
 class TeamController (
     private val teamApiService: TeamApiService,
-    private val memberApiService: MemberApiService
+    private val memberApiService: MemberApiService,
+    private val accountApiService: AccountApiService
 ) {
     @PostMapping("/join")
     fun teamAuthenticationCreate (
@@ -57,11 +61,24 @@ class TeamController (
         )
     }
 
-    /*
     @PostMapping("/invite")
     fun teamMemberCreateByAccount (
+        @AuthAccount account: Account,
+        @RequestBody req: TeamInviteReq
+    ): ResponseEntity<SuccessResponse> {
+        if (!memberApiService.existsByLeaderAndTeamId(account, req.team)) {
+            throw IllegalAccessError("권한이 없는 팀에 대한 접근입니다.")
+        }
+        val member: Member = memberApiService.createMember(
+            accountApiService.findAccountByEmail(req.email),
+            teamApiService.findTeamById(req.team),
+            Role.ROLE_MEMBER
+        )
+        return ResponseEntity (
+            SuccessResponse(ResponseCode.CREATED.code, ResponseCode.CREATED.status, "팀에 멤버를 초대하였습니다."),
+            HttpStatus.CREATED
+        )
+    }
 
-    ): Response
 
-     */
 }

@@ -27,4 +27,8 @@ class MemberDomainService(
     fun createMember(team: Team, account: Account, role: Role): Member {
         return memberRepository.save(Member(team=team, account=account, role=role))
     }
+
+    fun existsByLeaderAndTeamId(account: Account, team: Long, role: Role? = Role.ROLE_LEADER): Boolean {
+        return memberRepository.existsByAccountAndTeam_IdAndRole(account, team, role!!)
+    }
 }
