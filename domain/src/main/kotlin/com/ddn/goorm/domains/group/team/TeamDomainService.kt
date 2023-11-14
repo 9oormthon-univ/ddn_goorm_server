@@ -8,5 +8,8 @@ import javax.transaction.Transactional
 class TeamDomainService (
     private val teamRepository: TeamRepository
 ) {
+    fun createTeam(entity: Team): Team {
+        return teamRepository.save(entity)
+    }
 
 }

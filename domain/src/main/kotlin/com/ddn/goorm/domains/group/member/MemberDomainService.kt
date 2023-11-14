@@ -1,5 +1,6 @@
 package com.ddn.goorm.domains.group.member
 
+import com.ddn.goorm.common.enums.Role
 import com.ddn.goorm.domains.account.Account
 import com.ddn.goorm.domains.group.team.Team
 import com.ddn.goorm.domains.group.team.TeamRepository
@@ -21,5 +22,9 @@ class MemberDomainService(
     @Transactional(readOnly = true)
     fun findAllByAccount(account: Account) : List<Member> {
         return memberRepository.findAllByAccount(account)
+    }
+
+    fun createMember(team: Team, account: Account, role: Role): Member {
+        return memberRepository.save(Member(team=team, account=account, role=role))
     }
 }
