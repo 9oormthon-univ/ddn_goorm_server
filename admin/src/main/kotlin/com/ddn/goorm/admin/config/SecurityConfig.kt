@@ -28,7 +28,8 @@ class SecurityConfig (
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/**").permitAll()
+            .antMatchers("/accounts/info").hasRole("GUEST")
+            .anyRequest().permitAll()
             .run {
                 JwtSecurityConfig(jwtUtil).configure(http)
             }
