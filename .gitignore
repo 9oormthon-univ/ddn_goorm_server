@@ -40,6 +40,6 @@ out/
 
 ### properties ###
 domain/src/main/resources/*.yml
-api/src/main/resources/*.yaml
+api/src/main/resources/*.yml
 admin/src/main/resources/*.yml
 common/src/main/resources/application-common.yml

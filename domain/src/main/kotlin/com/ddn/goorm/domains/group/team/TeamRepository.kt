@@ -1,4 +1,6 @@
 package com.ddn.goorm.domains.group.team
 
-interface TeamRepository {
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface TeamRepository : JpaRepository<Team, Long> {
 }

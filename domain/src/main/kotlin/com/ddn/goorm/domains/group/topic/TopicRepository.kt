@@ -1,4 +1,6 @@
 package com.ddn.goorm.domains.group.topic
 
-interface TopicRepository {
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface TopicRepository : JpaRepository<Topic, Long> {
 }
