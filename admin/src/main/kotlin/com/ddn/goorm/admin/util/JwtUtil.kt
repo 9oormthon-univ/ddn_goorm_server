@@ -1,7 +1,7 @@
 package com.ddn.goorm.admin.util
 
 import com.ddn.goorm.admin.dto.TokenDto
-import com.ddn.goorm.domains.group.member.Role
+import com.ddn.goorm.common.enums.Role
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.Jwts
@@ -46,7 +46,7 @@ class JwtUtil (
     ) : TokenDto {
         val current = Date().time
 
-        val authorities = role.stream().map { it -> it.name }
+        val authorities = role.stream().map { it -> it.name }.toList().joinToString(",")
 
         val accessToken = Jwts.builder()
             .setSubject(id.toString())

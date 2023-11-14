@@ -1,4 +1,4 @@
-package com.ddn.goorm.domains.group.member
+package com.ddn.goorm.common.enums
 
 enum class Status(val label: String) {
     DELETED("탈퇴"),

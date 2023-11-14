@@ -18,4 +18,9 @@ class AccountDomainService (
         }
         return accountRepository.save(entity);
     }
+
+    fun findByEmail(email: String): Account {
+        return accountRepository.findByEmail(email)
+            .orElseThrow { IllegalArgumentException("존재하지 않는 이메일입니다.") }
+    }
 }

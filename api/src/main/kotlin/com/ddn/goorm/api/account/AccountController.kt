@@ -1,7 +1,9 @@
 package com.ddn.goorm.api.account
 
+import com.ddn.goorm.api.account.dto.request.SignInReq
 import com.ddn.goorm.api.account.dto.request.SignUpReq
 import com.ddn.goorm.api.account.dto.response.AccountRes
+import com.ddn.goorm.api.account.dto.response.TokenRes
 import com.ddn.goorm.common.response.ResponseCode
 import com.ddn.goorm.common.response.SuccessResponse
 import org.springframework.http.HttpStatus
@@ -34,6 +36,11 @@ class AccountController (
             ),
             HttpStatus.CREATED
         )
+    }
+
+    @PostMapping("/signin")
+    fun accountFindSignIn(@RequestBody req: SignInReq) : ResponseEntity<TokenRes> {
+        return ResponseEntity.ok(accountApiService.findAccountSignIn(req))
     }
 
 }

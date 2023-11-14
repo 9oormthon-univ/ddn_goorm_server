@@ -1,5 +1,6 @@
 package com.ddn.goorm.domains.group.member
 
+import com.ddn.goorm.common.enums.*
 import com.ddn.goorm.domains.BaseEntity
 import com.ddn.goorm.domains.account.Account
 import com.ddn.goorm.domains.group.team.Team
@@ -15,7 +16,7 @@ data class Member(
     var status: Status? = Status.ACTIVE,
 
     @Column
-    var role: Role? = Role.MEMBER,
+    var role: Role? = Role.ROLE_MEMBER,
 
     @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "account")
