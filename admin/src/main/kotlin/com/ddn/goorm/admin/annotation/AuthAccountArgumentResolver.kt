@@ -24,7 +24,7 @@ class AuthAccountArgumentResolver(
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Account? {
-        val authAccountAnnotation: AuthAccount = parameter.getMethodAnnotation(AuthAccount::class.java)!!
+        val authAccountAnnotation: AuthAccount? = parameter.getMethodAnnotation(AuthAccount::class.java)
         val authentication = SecurityContextHolder.getContext().authentication
 
         return if (authentication.principal == "anonymousUser") {
@@ -33,7 +33,5 @@ class AuthAccountArgumentResolver(
         else {
             accountDomainService.findById(authentication.name.toLong())
         }
-
-
     }
 }

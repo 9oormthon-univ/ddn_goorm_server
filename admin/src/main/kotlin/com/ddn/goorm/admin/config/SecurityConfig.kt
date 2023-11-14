@@ -16,7 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 class SecurityConfig (
     private val jwtUtil: JwtUtil
 ) {
@@ -26,9 +26,9 @@ class SecurityConfig (
         http.cors().configurationSource(corsConfigurationSource())
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            //.and()
-            //.authorizeRequests()
-            //.antMatchers("/**").permitAll()
+            .and()
+            .authorizeRequests()
+            .antMatchers("/**").permitAll()
             .run {
                 JwtSecurityConfig(jwtUtil).configure(http)
             }
