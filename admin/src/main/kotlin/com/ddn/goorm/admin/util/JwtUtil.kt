@@ -46,13 +46,11 @@ class JwtUtil (
     ) : TokenDto {
         val current = Date().time
 
-        val authorities = role.stream().map { it -> it.name }.toList().joinToString(",")
-
         val accessToken = Jwts.builder()
             .setSubject(id.toString())
             .claim("team", team.toString())
             .claim("member", member.toString())
-            .claim(AUTHORITIES_KEY, authorities)
+            .claim(AUTHORITIES_KEY, role.stream().map { it -> it.name }.toList().joinToString(","))
             .setExpiration(Date(current + ACCESS_TOKEN_EXPIRE_TIME))
             .signWith(key, SignatureAlgorithm.HS512).compact()
         val refreshToken = Jwts.builder()
