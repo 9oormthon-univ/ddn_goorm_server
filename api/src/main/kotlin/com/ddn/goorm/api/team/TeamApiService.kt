@@ -36,4 +36,8 @@ class TeamApiService (
             MemberRes(member)
         )
     }
+
+    fun findTeamList(account: Account): List<TeamRes> {
+        return memberDomainService.findAllByAccount(account).stream().map { it -> TeamRes(it.team!!) }.toList()
+    }
 }

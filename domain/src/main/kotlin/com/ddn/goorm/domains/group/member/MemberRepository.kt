@@ -6,4 +6,7 @@ import java.util.*
 
 interface MemberRepository : JpaRepository<Member, Long> {
     fun findMemberByAccountAndTeam_Id(account: Account, team: Long): Optional<Member>
+
+    fun findAllByAccount(account: Account): List<Member>
+
 }

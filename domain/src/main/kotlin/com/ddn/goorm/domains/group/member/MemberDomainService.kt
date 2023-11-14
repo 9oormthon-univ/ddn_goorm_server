@@ -1,6 +1,7 @@
 package com.ddn.goorm.domains.group.member
 
 import com.ddn.goorm.domains.account.Account
+import com.ddn.goorm.domains.group.team.Team
 import com.ddn.goorm.domains.group.team.TeamRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -15,5 +16,10 @@ class MemberDomainService(
     fun findMemberByAccountAndTeamId(account: Account, team: Long): Member {
         return memberRepository.findMemberByAccountAndTeam_Id(account, team)
             .orElseThrow{IllegalArgumentException("가입하지 않은 팀입니다.")};
+    }
+
+    @Transactional(readOnly = true)
+    fun findAllByAccount(account: Account) : List<Member> {
+        return memberRepository.findAllByAccount(account)
     }
 }
