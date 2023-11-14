@@ -11,4 +11,8 @@ class AccountDomainService (
     fun findAccountList() : List<Account> {
         return accountRepository.findAll()
     }
+
+    fun createAccount(entity: Account) : Account {
+        return accountRepository.save(entity);
+    }
 }
