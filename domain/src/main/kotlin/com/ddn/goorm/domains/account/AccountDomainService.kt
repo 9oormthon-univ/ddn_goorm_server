@@ -23,4 +23,9 @@ class AccountDomainService (
         return accountRepository.findByEmail(email)
             .orElseThrow { IllegalArgumentException("존재하지 않는 이메일입니다.") }
     }
+
+    fun findById(id: Long): Account? {
+        return accountRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("유효하지 않은 유저 고유 id입니다.")}
+    }
 }

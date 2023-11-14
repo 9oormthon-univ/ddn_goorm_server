@@ -1,6 +1,7 @@
 package com.ddn.goorm.admin.config
 
 
+import com.ddn.goorm.admin.util.JwtUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -16,14 +17,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig (
+    private val jwtUtil: JwtUtil
+) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.cors().configurationSource(corsConfigurationSource())
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
+            .and()
+            .authorizeRequests()
+            .antMatchers("/**").permitAll()
+            .apply{JwtSecurityConfig(jwtUtil)}
 
         http.headers().frameOptions().disable()
         http.headers().xssProtection().disable()
