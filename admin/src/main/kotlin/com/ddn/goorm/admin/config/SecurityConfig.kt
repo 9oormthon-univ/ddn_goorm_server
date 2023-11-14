@@ -29,6 +29,8 @@ class SecurityConfig (
             .and()
             .authorizeRequests()
             .antMatchers("/accounts/info").hasRole("GUEST")
+            .antMatchers("/teams/*", "/teams/join").hasRole("GUEST")
+            .antMatchers("/teams/invite").hasRole("LEADER")
             .anyRequest().permitAll()
             .run {
                 JwtSecurityConfig(jwtUtil).configure(http)

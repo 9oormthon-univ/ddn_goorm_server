@@ -43,4 +43,8 @@ class AccountApiService (
         )
     }
 
+    fun findAccountByEmail(email: String): Account {
+        return accountDomainService.findByEmail(email)
+    }
+
 }

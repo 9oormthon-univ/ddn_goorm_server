@@ -31,12 +31,15 @@ class JwtFilter (
     }
 
     private fun resolveToken(request: HttpServletRequest) : String? {
-        val bearerToken: String = request.getHeader("Authorization")
+        val bearerToken: String? = request.getHeader("Authorization")
 
-        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            bearerToken.substring(7)
-        } else {
-            null
+        if (bearerToken != null) {
+            return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
+                bearerToken.substring(7)
+            } else {
+                null
+            }
         }
+        return null
     }
 }
