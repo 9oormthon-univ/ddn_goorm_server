@@ -13,6 +13,9 @@ class AccountDomainService (
     }
 
     fun createAccount(entity: Account) : Account {
+        if (accountRepository.existsByEmail(entity.email!!)) {
+            throw IllegalArgumentException("중복되는 이메일이 존재합니다.")
+        }
         return accountRepository.save(entity);
     }
 }
