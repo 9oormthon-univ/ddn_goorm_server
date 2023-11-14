@@ -1,11 +1,13 @@
 package com.ddn.goorm.api.account
 
+import com.ddn.goorm.admin.annotation.AuthAccount
 import com.ddn.goorm.api.account.dto.request.SignInReq
 import com.ddn.goorm.api.account.dto.request.SignUpReq
 import com.ddn.goorm.api.account.dto.response.AccountRes
 import com.ddn.goorm.api.account.dto.response.TokenRes
 import com.ddn.goorm.common.response.ResponseCode
 import com.ddn.goorm.common.response.SuccessResponse
+import com.ddn.goorm.domains.account.Account
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -41,6 +43,11 @@ class AccountController (
     @PostMapping("/signin")
     fun accountFindSignIn(@RequestBody req: SignInReq) : ResponseEntity<TokenRes> {
         return ResponseEntity.ok(accountApiService.findAccountSignIn(req))
+    }
+
+    @GetMapping("/info")
+    fun accountFindInfo(@AuthAccount account: Account) : ResponseEntity<AccountRes> {
+        return ResponseEntity.ok(AccountRes(account))
     }
 
 }
