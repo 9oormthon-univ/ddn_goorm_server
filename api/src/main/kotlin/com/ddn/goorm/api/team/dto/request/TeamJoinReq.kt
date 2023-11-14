@@ -1,4 +1,3 @@
 package com.ddn.goorm.api.team.dto.request
 
-class TeamJoinReq {
-}
+data class TeamJoinReq (val team: Long)
