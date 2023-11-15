@@ -12,6 +12,5 @@ else
   sudo docker rmi $CURRENT_CONTAINER
 fi
 
-cd ./api
 sudo docker build -t ddngoorm .
 sudo docker run -d -p 80:8080 --name ddngoorm --network app ddngoorm
