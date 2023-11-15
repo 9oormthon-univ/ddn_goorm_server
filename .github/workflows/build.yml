@@ -37,22 +37,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-
-      - name: [DOMAIN] create application.yml in domain
+      - name: DOMAIN create application.yml in domain
         run: touch ./domain/src/main/resources/application-domain.yml
           && echo "${{secrets.APPLICATION_DOMAIN}}" > ./domain/src/main/resources/application-domain.yml
 
-      - name: [DOMAIN] upload application.yml in domain
+      - name: DOMAIN upload application.yml in domain
         uses: actions/upload-artifact@v2
         with:
           name: application-domain.yml
           path: ./domain/src/main/resources/application-domain.yml
 
-      - name: [ADMIN] create application.yml in admin
+      - name: ADMIN create application.yml in admin
         run: touch ./admin/src/main/resources/application-admin.yml
           && echo "${{secrets.APPLICATION_ADMIN}}" > ./admin/src/main/resources/application-admin.yml
 
-      - name: [ADMIN] upload application.yml in admin
+      - name: ADMIN upload application.yml in admin
         uses: actions/upload-artifact@v2
         with:
           name: application-admin.yml
