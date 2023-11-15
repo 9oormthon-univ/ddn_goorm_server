@@ -10,6 +10,8 @@ interface MemberRepository : JpaRepository<Member, Long> {
 
     fun findAllByTeam_Id(team: Long): List<Member>
 
+    fun findByAccount_IdAndTeam_Id(account: Long, team: Long): Optional<Member>
+
     fun findAllByAccount(account: Account): List<Member>
 
     fun existsByAccountAndTeam_IdAndRole(account: Account, team: Long, role: Role): Boolean

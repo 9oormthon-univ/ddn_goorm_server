@@ -1,6 +1,7 @@
 package com.ddn.goorm.admin.util
 
 import com.ddn.goorm.admin.dto.TokenDto
+import com.ddn.goorm.admin.dto.AccountDto
 import com.ddn.goorm.common.enums.Role
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
@@ -13,13 +14,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.time.Duration
 import java.util.Date
-import java.util.stream.Collectors
 
 
 @Component
@@ -72,7 +70,22 @@ class JwtUtil (
             .map { it -> SimpleGrantedAuthority(it) }
             .toList()
 
-        val principal: UserDetails = User(claims.subject, "", authorities)
+        val principal: AccountDto
+
+        if (claims.get("team") == "null") {
+            principal = AccountDto(
+                claims.subject.toLong(),
+                null,
+                null
+            )
+        } else {
+            principal = AccountDto (
+                claims.subject.toLong(),
+                claims.get("team").toString().toLong(),
+                claims.get("member").toString().toLong()
+            )
+        }
+
         return UsernamePasswordAuthenticationToken(principal, "", authorities)
     }
 

@@ -1,6 +1,7 @@
 package com.ddn.goorm.api.team
 
 import com.ddn.goorm.admin.annotation.AuthAccount
+import com.ddn.goorm.admin.annotation.AuthAccountInfo
 import com.ddn.goorm.api.account.AccountApiService
 import com.ddn.goorm.api.account.dto.response.TokenRes
 import com.ddn.goorm.api.member.MemberApiService
@@ -35,25 +36,25 @@ class TeamController (
 ) {
     @PostMapping("/join")
     fun teamAuthenticationCreate (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @RequestBody req: TeamJoinReq
     ) : ResponseEntity<TeamJoinRes> {
         return ResponseEntity (
-            teamApiService.createTeamAuthenticateToken(account, req.team),
+            teamApiService.createTeamAuthenticateToken(accountInfo.account, req.team),
             HttpStatus.CREATED
         )
     }
 
     @GetMapping
     fun teamListFindByAccount (
-        @AuthAccount account: Account
+        @AuthAccount accountInfo: AuthAccountInfo
     ) : ResponseEntity<List<TeamRes>> {
-        return ResponseEntity.ok(teamApiService.findTeamList(account))
+        return ResponseEntity.ok(teamApiService.findTeamList(accountInfo.account))
     }
 
     @GetMapping("/member/{team}")
     fun teamMemberListFind (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @PathVariable team: Long
     ) : ResponseEntity<List<MemberRes>> {
         return ResponseEntity.ok(memberApiService.findMemberByTeam(team))
@@ -61,15 +62,11 @@ class TeamController (
 
     @DeleteMapping("/member/{team}/{member}")
     fun teamMemberDelete (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @PathVariable team: Long,
         @PathVariable member: Long
     ) : ResponseEntity<SuccessResponse> {
-        if (!memberApiService.existsByLeaderAndTeamId(account, team)) {
-            throw IllegalAccessError("권한이 없는 팀에 대한 접근입니다.")
-        } else {
-            memberApiService.deleteMember(team, member)
-        }
+        memberApiService.deleteMember(team, member)
         return ResponseEntity (
             SuccessResponse(ResponseCode.OK.code, ResponseCode.OK.status, "멤버를 비활성화했습니다."),
             HttpStatus.OK
@@ -78,11 +75,11 @@ class TeamController (
 
     @DeleteMapping("/member/{team}")
     fun teamMemberSelfDelete (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @PathVariable team: Long
     ) : ResponseEntity<SuccessResponse> {
 
-        memberApiService.deleteMemberSelf(team, account)
+        memberApiService.deleteMemberSelf(team, accountInfo.account)
 
         return ResponseEntity (
             SuccessResponse(ResponseCode.OK.code, ResponseCode.OK.status, "멤버를 비활성화했습니다."),
@@ -92,11 +89,11 @@ class TeamController (
 
     @PostMapping
     fun teamCreate (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @RequestBody req: TeamCreateReq
     ) : ResponseEntity<SuccessResponse> {
-        val team: Team = teamApiService.createTeam(account, req)
-        memberApiService.createMember(account, team, Role.ROLE_LEADER)
+        val team: Team = teamApiService.createTeam(accountInfo.account, req)
+        memberApiService.createMember(accountInfo.account, team, Role.ROLE_LEADER)
         return ResponseEntity (
             SuccessResponse(ResponseCode.CREATED.code, ResponseCode.CREATED.status, "팀이 정상적으로 생성되었습니다."),
             HttpStatus.CREATED
@@ -105,18 +102,15 @@ class TeamController (
 
     @PostMapping("/invite")
     fun teamMemberCreateByAccount (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @RequestBody req: TeamInviteReq
     ): ResponseEntity<SuccessResponse> {
-        if (!memberApiService.existsByLeaderAndTeamId(account, req.team)) {
-            throw IllegalAccessError("권한이 없는 팀에 대한 접근입니다.")
-        } else {
-            memberApiService.createMember(
-                accountApiService.findAccountByEmail(req.email),
-                teamApiService.findTeamById(req.team),
-                Role.ROLE_MEMBER
-            )
-        }
+        memberApiService.createMember(
+            accountApiService.findAccountByEmail(req.email),
+            teamApiService.findTeamById(req.team),
+            Role.ROLE_MEMBER
+        )
+
         return ResponseEntity (
             SuccessResponse(ResponseCode.CREATED.code, ResponseCode.CREATED.status, "팀에 멤버를 초대하였습니다."),
             HttpStatus.CREATED
