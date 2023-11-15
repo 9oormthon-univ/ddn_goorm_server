@@ -9,4 +9,5 @@ class TeamRes (
     val name = team.name
     val detail = team.detail
     val icon = team.icon
+    val status = team.status
 }

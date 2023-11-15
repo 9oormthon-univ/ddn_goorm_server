@@ -1,5 +1,6 @@
 package com.ddn.goorm.domains.group.team
 
+import com.ddn.goorm.common.enums.Status
 import com.ddn.goorm.domains.BaseEntity
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -14,5 +15,8 @@ data class Team(
 
     @Column(length = 255)
     var icon: String? = "",
+
+    @Column
+    var status: Status? = Status.ACTIVE,
 ) : BaseEntity() {
 }

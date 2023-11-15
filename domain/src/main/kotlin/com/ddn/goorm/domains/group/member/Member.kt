@@ -26,4 +26,7 @@ data class Member(
     @JoinColumn(name = "team")
     var team: Team? = null
 ) : BaseEntity() {
+    fun delete() {
+        this.status = Status.DELETED
+    }
 }

@@ -18,6 +18,7 @@ import com.ddn.goorm.domains.group.member.Member
 import com.ddn.goorm.domains.group.team.Team
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -56,6 +57,37 @@ class TeamController (
         @PathVariable team: Long
     ) : ResponseEntity<List<MemberRes>> {
         return ResponseEntity.ok(memberApiService.findMemberByTeam(team))
+    }
+
+    @DeleteMapping("/member/{team}/{member}")
+    fun teamMemberDelete (
+        @AuthAccount account: Account,
+        @PathVariable team: Long,
+        @PathVariable member: Long
+    ) : ResponseEntity<SuccessResponse> {
+        if (!memberApiService.existsByLeaderAndTeamId(account, team)) {
+            throw IllegalAccessError("권한이 없는 팀에 대한 접근입니다.")
+        } else {
+            memberApiService.deleteMember(team, member)
+        }
+        return ResponseEntity (
+            SuccessResponse(ResponseCode.OK.code, ResponseCode.OK.status, "멤버를 비활성화했습니다."),
+            HttpStatus.OK
+        )
+    }
+
+    @DeleteMapping("/member/{team}")
+    fun teamMemberSelfDelete (
+        @AuthAccount account: Account,
+        @PathVariable team: Long
+    ) : ResponseEntity<SuccessResponse> {
+
+        memberApiService.deleteMemberSelf(team, account)
+
+        return ResponseEntity (
+            SuccessResponse(ResponseCode.OK.code, ResponseCode.OK.status, "멤버를 비활성화했습니다."),
+            HttpStatus.OK
+        )
     }
 
     @PostMapping

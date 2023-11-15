@@ -25,4 +25,15 @@ class MemberApiService (
         return memberDomainService.findMemberByTeam(team)
             .stream().map {it -> MemberRes(it)}.toList()
     }
+
+    fun deleteMember(team: Long, member: Long) {
+        memberDomainService.deleteTeamMemberById(team, member)
+    }
+
+    fun deleteMemberSelf(team: Long, account: Account) {
+        memberDomainService.deleteTeamMemberById (
+            team,
+            memberDomainService.findMemberByAccountAndTeamId(account, team).id!!
+        )
+    }
 }

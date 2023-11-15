@@ -34,4 +34,11 @@ class MemberDomainService(
     fun findMemberByTeam(team: Long): List<Member> {
         return memberRepository.findAllByTeam_Id(team)
     }
+
+    fun deleteTeamMemberById(team: Long, member: Long) {
+        val member: Member = memberRepository.findById(member)
+            .orElseThrow {IllegalArgumentException("존재하지 않는 멤버입니다.")}
+        member.delete()
+        memberRepository.save(member)
+    }
 }
