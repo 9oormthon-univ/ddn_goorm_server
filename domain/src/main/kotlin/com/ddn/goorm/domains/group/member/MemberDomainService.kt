@@ -3,7 +3,6 @@ package com.ddn.goorm.domains.group.member
 import com.ddn.goorm.common.enums.Role
 import com.ddn.goorm.domains.account.Account
 import com.ddn.goorm.domains.group.team.Team
-import com.ddn.goorm.domains.group.team.TeamRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -30,5 +29,16 @@ class MemberDomainService(
 
     fun existsByLeaderAndTeamId(account: Account, team: Long, role: Role? = Role.ROLE_LEADER): Boolean {
         return memberRepository.existsByAccountAndTeam_IdAndRole(account, team, role!!)
+    }
+
+    fun findMemberByTeam(team: Long): List<Member> {
+        return memberRepository.findAllByTeam_Id(team)
+    }
+
+    fun deleteTeamMemberById(team: Long, member: Long) {
+        val member: Member = memberRepository.findById(member)
+            .orElseThrow {IllegalArgumentException("존재하지 않는 멤버입니다.")}
+        member.delete()
+        memberRepository.save(member)
     }
 }

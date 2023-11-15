@@ -8,6 +8,8 @@ import java.util.*
 interface MemberRepository : JpaRepository<Member, Long> {
     fun findDistinctByAccountAndTeam_Id(account: Account, team: Long): Optional<Member>
 
+    fun findAllByTeam_Id(team: Long): List<Member>
+
     fun findAllByAccount(account: Account): List<Member>
 
     fun existsByAccountAndTeam_IdAndRole(account: Account, team: Long, role: Role): Boolean

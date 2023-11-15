@@ -4,6 +4,7 @@ package com.ddn.goorm.admin.config
 import com.ddn.goorm.admin.util.JwtUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -29,8 +30,14 @@ class SecurityConfig (
             .and()
             .authorizeRequests()
             .antMatchers("/accounts/info").hasRole("GUEST")
-            .antMatchers("/teams/*", "/teams/join").hasRole("GUEST")
-            .antMatchers("/teams/invite").hasRole("LEADER")
+            .antMatchers("/teams", "/teams/join", "teams/member/{team}").hasRole("GUEST")
+            .antMatchers(HttpMethod.GET, "/teams/member/{team}").hasRole("GUEST")
+            .antMatchers(HttpMethod.DELETE, "/teams/member/{team}").hasRole("MEMBER")
+            .antMatchers("/teams/invite", "/teams/member/{team}/{member}").hasRole("LEADER")
+            .antMatchers(HttpMethod.GET, "/topics/**").hasRole("MEMBER")
+            .antMatchers(HttpMethod.GET, "/topics/**").hasRole("LEADER")
+            .antMatchers(HttpMethod.DELETE, "/topics/**").hasRole("LEADER")
+            .antMatchers(HttpMethod.POST, "/topics/**").hasRole("LEADER")
             .anyRequest().permitAll()
             .run {
                 JwtSecurityConfig(jwtUtil).configure(http)
