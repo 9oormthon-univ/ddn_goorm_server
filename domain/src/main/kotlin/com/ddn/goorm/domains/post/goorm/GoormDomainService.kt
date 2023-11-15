@@ -8,4 +8,12 @@ import org.springframework.transaction.annotation.Transactional
 class GoormDomainService (
     private val goormRepository: GoormRepository
 ) {
+    fun createGoorm(goorm: Goorm): Goorm {
+        return goormRepository.save(goorm)
+    }
+
+    @Transactional(readOnly = true)
+    fun findAllByTopicId(topic: Long): List<Goorm>   {
+        return goormRepository.findAllByTopic_Id(topic)
+    }
 }

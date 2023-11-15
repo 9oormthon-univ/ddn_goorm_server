@@ -1,6 +1,7 @@
 package com.ddn.goorm.api.topic
 
 import com.ddn.goorm.admin.annotation.AuthAccount
+import com.ddn.goorm.admin.annotation.AuthAccountInfo
 import com.ddn.goorm.api.topic.dto.request.TopicCreateReq
 import com.ddn.goorm.api.topic.dto.response.TopicRes
 import com.ddn.goorm.common.response.ResponseCode
@@ -23,15 +24,15 @@ class TopicController (
 
     @GetMapping("/{team}")
     fun topicListTeamFind (
-        @AuthAccount account: Account,
-        @PathVariable  team: Long
+        @AuthAccount accountInfo: AuthAccountInfo,
+        @PathVariable team: Long
     ) : ResponseEntity<List<TopicRes>> {
         return ResponseEntity.ok(topicApiService.findTopicList(team))
     }
 
     @PostMapping
     fun topicCreate (
-        @AuthAccount account: Account,
+        @AuthAccount accountInfo: AuthAccountInfo,
         @RequestBody req: TopicCreateReq
     ) : ResponseEntity<SuccessResponse> {
         topicApiService.createTopic(req)

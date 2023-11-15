@@ -1,6 +1,7 @@
 package com.ddn.goorm.api.account
 
 import com.ddn.goorm.admin.annotation.AuthAccount
+import com.ddn.goorm.admin.annotation.AuthAccountInfo
 import com.ddn.goorm.api.account.dto.request.SignInReq
 import com.ddn.goorm.api.account.dto.request.SignUpReq
 import com.ddn.goorm.api.account.dto.response.AccountRes
@@ -46,8 +47,8 @@ class AccountController (
     }
 
     @GetMapping("/info")
-    fun accountFindInfo(@AuthAccount account: Account) : ResponseEntity<AccountRes> {
-        return ResponseEntity.ok(AccountRes(account))
+    fun accountFindInfo(@AuthAccount accountInfo: AuthAccountInfo) : ResponseEntity<AccountRes> {
+        return ResponseEntity.ok(AccountRes(accountInfo.account))
     }
 
 }

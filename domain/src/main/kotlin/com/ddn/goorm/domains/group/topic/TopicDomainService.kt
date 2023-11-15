@@ -16,4 +16,10 @@ class TopicDomainService (
     fun createTopic(topic: Topic): Topic {
         return topicRepository.save(topic)
     }
+
+    @Transactional(readOnly = true)
+    fun findById(id: Long): Topic {
+        return topicRepository.findById(id)
+            .orElseThrow{IllegalArgumentException("존재하지 않는 주제입니다.")}
+    }
 }
