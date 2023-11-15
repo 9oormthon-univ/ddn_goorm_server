@@ -16,7 +16,6 @@ import org.springframework.web.method.support.ModelAndViewContainer
 @Component
 class AuthAccountArgumentResolver(
     private val accountDomainService: AccountDomainService,
-    private val teamDomainService: TeamDomainService,
     private val memberDomainService: MemberDomainService
 ) : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
