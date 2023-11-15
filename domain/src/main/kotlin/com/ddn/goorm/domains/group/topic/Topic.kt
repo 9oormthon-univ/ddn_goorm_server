@@ -12,6 +12,9 @@ class Topic (
     @Column(length = 255)
     var detail: String? = "",
 
+    @Column(length = 255)
+    val icon: String? = "",
+
     @ManyToOne(cascade = [CascadeType.ALL])
     @JoinColumn(name = "team")
     var team: Team? = null
