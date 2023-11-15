@@ -1,5 +1,6 @@
 package com.ddn.goorm.api.member
 
+import com.ddn.goorm.api.member.dto.response.MemberRes
 import com.ddn.goorm.api.team.dto.request.TeamCreateReq
 import com.ddn.goorm.common.enums.Role
 import com.ddn.goorm.domains.account.Account
@@ -18,5 +19,10 @@ class MemberApiService (
 
     fun existsByLeaderAndTeamId(account: Account, team: Long): Boolean {
         return memberDomainService.existsByLeaderAndTeamId(account, team)
+    }
+
+    fun findMemberByTeam(team: Long): List<MemberRes> {
+        return memberDomainService.findMemberByTeam(team)
+            .stream().map {it -> MemberRes(it)}.toList()
     }
 }
