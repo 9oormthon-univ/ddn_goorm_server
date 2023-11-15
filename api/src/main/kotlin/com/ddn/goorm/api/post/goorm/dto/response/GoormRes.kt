@@ -10,4 +10,16 @@ class GoormRes (
     val title: String? = goorm.title
     val contents: String? = goorm.contents
     val account: AccountRes = AccountRes(goorm.member!!.account!!)
+    val commentCount: Int = goorm.comments?.size!!
+    val color: Int = priority(commentCount)
+
+    private fun priority(commentCount: Int): Int {
+        return if (commentCount > 10) {
+            1
+        } else if (commentCount > 5) {
+            2
+        } else {
+            3
+        }
+    }
 }
