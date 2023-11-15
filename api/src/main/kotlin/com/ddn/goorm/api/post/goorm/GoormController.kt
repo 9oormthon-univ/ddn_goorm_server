@@ -40,11 +40,10 @@ class GoormController (
     ): ResponseEntity<List<GoormRes>> {
         return ResponseEntity.ok(
             goormApiService.findGoormList(topic)
+                ?.sortedByDescending { it -> it.commentCount }
+                ?.sortedByDescending { it -> it.createdAt },
         )
     }
 
-    @PutMapping("/{goorm}")
-    fun goormModifyIsFin(
-        @PathVariable goorm: Long
-    ): ResponseEntity<>
+
 }

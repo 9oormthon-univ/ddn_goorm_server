@@ -4,6 +4,7 @@ import com.ddn.goorm.domains.BaseEntity
 import com.ddn.goorm.domains.group.member.Member
 import com.ddn.goorm.domains.group.team.Team
 import com.ddn.goorm.domains.group.topic.Topic
+import com.ddn.goorm.domains.post.comment.Comment
 import javax.persistence.*
 
 @Entity
@@ -25,4 +26,11 @@ class Goorm(
     @JoinColumn(name = "topic")
     var topic: Topic? = null
 ) : BaseEntity() {
+
+    @OneToMany (
+        mappedBy = "goorm",
+        cascade = [CascadeType.ALL]
+    )
+    var comments: List<Comment>? = null
+
 }
