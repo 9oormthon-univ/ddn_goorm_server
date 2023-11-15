@@ -12,4 +12,8 @@ class TopicDomainService (
     fun findTopicListByTeam(team: Long): List<Topic> {
         return topicRepository.findAllByTeam_Id(team)
     }
+
+    fun createTopic(topic: Topic): Topic {
+        return topicRepository.save(topic)
+    }
 }

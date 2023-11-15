@@ -1,5 +1,6 @@
 package com.ddn.goorm.api.topic
 
+import com.ddn.goorm.api.topic.dto.request.TopicCreateReq
 import com.ddn.goorm.api.topic.dto.response.TopicRes
 import com.ddn.goorm.domains.group.team.TeamDomainService
 import com.ddn.goorm.domains.group.topic.TopicDomainService
@@ -13,5 +14,9 @@ class TopicApiService (
     fun findTopicList(team: Long): List<TopicRes> {
         return topicDomainService.findTopicListByTeam(team)
             .stream().map { it -> TopicRes(it) }.toList()
+    }
+
+    fun createTopic(req: TopicCreateReq): TopicRes {
+        return TopicRes(topicDomainService.createTopic(req.toEntity(teamDomainService.findById(req.team))))
     }
 }
