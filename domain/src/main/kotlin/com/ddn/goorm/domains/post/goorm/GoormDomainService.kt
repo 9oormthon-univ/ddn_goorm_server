@@ -16,4 +16,15 @@ class GoormDomainService (
     fun findAllByTopicId(topic: Long): List<Goorm>   {
         return goormRepository.findAllByTopic_Id(topic)
     }
+
+    @Transactional(readOnly = true)
+    fun findById(id: Long): Goorm {
+        return goormRepository.findById(id)
+            .orElseThrow { IllegalArgumentException("구름이 존재하지 않습니다.") }
+    }
+
+    fun updateGoormFinStatus(goorm: Goorm): Goorm {
+        goorm.updateIsFin()
+        return goormRepository.save(goorm)
+    }
 }
