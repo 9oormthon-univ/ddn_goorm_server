@@ -11,6 +11,7 @@ class GoormRes (
     val title: String? = goorm.title
     val contents: String? = goorm.contents
     val account: AccountRes = AccountRes(goorm.member!!.account!!)
+    val isPin: Boolean? = goorm.isPin
     val commentCount: Int = goorm.comments?.size!!
     val color: Int = priority(commentCount)
     val createdAt: LocalDateTime? = goorm.createdAt

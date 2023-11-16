@@ -38,6 +38,9 @@ class SecurityConfig (
             .antMatchers(HttpMethod.GET, "/topics/**").hasRole("LEADER")
             .antMatchers(HttpMethod.DELETE, "/topics/**").hasRole("LEADER")
             .antMatchers(HttpMethod.POST, "/topics/**").hasRole("LEADER")
+            .antMatchers("/goorms/**").hasRole("LEADER")
+            .antMatchers(HttpMethod.GET, "/goorms/**").hasRole("MEMBER")
+            .antMatchers(HttpMethod.POST, "/goorms/**").hasRole("MEMBER")
             .anyRequest().permitAll()
             .run {
                 JwtSecurityConfig(jwtUtil).configure(http)

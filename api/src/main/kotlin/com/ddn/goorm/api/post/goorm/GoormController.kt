@@ -38,12 +38,20 @@ class GoormController (
     fun goormListFindByTopic(
         @PathVariable topic: Long
     ): ResponseEntity<List<GoormRes>> {
+        // TODO: goormList 기준에 맞춰 Sort 필요
         return ResponseEntity.ok(
             goormApiService.findGoormList(topic)
+                ?.sortedBy { it -> it.isPin }
                 ?.sortedByDescending { it -> it.commentCount }
                 ?.sortedByDescending { it -> it.createdAt },
         )
     }
 
-
+    @PutMapping("/{goorm}")
+    fun goormModifyIsFin(
+        @PathVariable goorm: Long
+    ): ResponseEntity<SuccessResponse> {
+        goormApiService.updateGoormFin(goorm)
+        return ResponseEntity.ok(SuccessResponse(ResponseCode.OK.code, ResponseCode.OK.status, "핀 상태로 변경하였습니다."))
+    }
 }

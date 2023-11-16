@@ -33,4 +33,9 @@ class Goorm(
     )
     var comments: List<Comment>? = null
 
+
+    fun updateIsFin() {
+        this.isPin = !this.isPin!!
+    }
+
 }
