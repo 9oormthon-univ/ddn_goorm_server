@@ -36,4 +36,8 @@ class MemberApiService (
             memberDomainService.findMemberByAccountAndTeamId(account, team).id!!
         )
     }
+
+    fun findMemberByTeamIdAndAccount(team: Long, account: Account): Member {
+        return memberDomainService.findMemberByAccountAndTeamId(account, team)
+    }
 }
