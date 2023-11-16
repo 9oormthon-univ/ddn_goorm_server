@@ -1,5 +1,6 @@
 package com.ddn.goorm.admin.config
 
+import com.ddn.goorm.admin.filter.JwtExceptionFilter
 import com.ddn.goorm.admin.filter.JwtFilter
 import com.ddn.goorm.admin.util.JwtUtil
 import io.jsonwebtoken.Jwt
@@ -15,7 +16,9 @@ class JwtSecurityConfig (
     @Override
     override fun configure(httpSecurity: HttpSecurity) {
         val jwtFilter: JwtFilter = JwtFilter(jwtUtil)
+        val jwtExceptionFilter: JwtExceptionFilter = JwtExceptionFilter()
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+        httpSecurity.addFilterBefore(jwtExceptionFilter, JwtFilter::class.java)
     }
 
 }

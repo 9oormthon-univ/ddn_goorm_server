@@ -19,7 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 class SecurityConfig (
-    private val jwtUtil: JwtUtil
+    private val jwtUtil: JwtUtil,
+    private val cors: CorsConfig
 ) {
 
     @Bean
@@ -42,6 +43,8 @@ class SecurityConfig (
             .antMatchers(HttpMethod.GET, "/goorms/**").hasRole("MEMBER")
             .antMatchers(HttpMethod.POST, "/goorms/**").hasRole("MEMBER")
             .anyRequest().permitAll()
+            .and()
+            .addFilter(cors.securityCorsFilter())
             .run {
                 JwtSecurityConfig(jwtUtil).configure(http)
             }
