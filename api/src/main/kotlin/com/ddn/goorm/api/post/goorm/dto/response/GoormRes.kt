@@ -1,6 +1,7 @@
 package com.ddn.goorm.api.post.goorm.dto.response
 
 import com.ddn.goorm.api.account.dto.response.AccountRes
+import com.ddn.goorm.api.post.comment.dto.response.CommentRes
 import com.ddn.goorm.domains.post.goorm.Goorm
 import java.time.LocalDateTime
 
@@ -15,6 +16,7 @@ class GoormRes (
     val commentCount: Int = goorm.comments?.size!!
     val color: Int = priority(commentCount)
     val createdAt: LocalDateTime? = goorm.createdAt
+    val comments: List<CommentRes> = goorm.comments!!.stream().map { it -> CommentRes(it) }.toList()
 
     private fun priority(commentCount: Int): Int {
         return if (commentCount > 10) {

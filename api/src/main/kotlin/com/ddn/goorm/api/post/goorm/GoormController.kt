@@ -46,6 +46,15 @@ class GoormController (
         )
     }
 
+    @GetMapping("/detail/{goorm}")
+    fun goormDetailFind (
+        @PathVariable goorm: Long
+    ) : ResponseEntity<GoormRes> {
+        return ResponseEntity.ok(
+            goormApiService.findGoorm(goorm)
+        )
+    }
+
     @PutMapping("/{goorm}")
     fun goormModifyIsFin(
         @PathVariable goorm: Long

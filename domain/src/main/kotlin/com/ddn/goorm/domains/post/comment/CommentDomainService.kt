@@ -15,4 +15,9 @@ class CommentDomainService (
             contents=contents, goorm=goorm, member=member
         ))
     }
+
+    @Transactional(readOnly = true)
+    fun findCommentListByGoormId(goormId: Long) : List<Comment> {
+        return commentRepository.findAllByGoorm_Id(goormId);
+    }
 }
