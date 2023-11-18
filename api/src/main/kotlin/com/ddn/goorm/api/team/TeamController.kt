@@ -95,7 +95,7 @@ class TeamController (
         val team: Team = teamApiService.createTeam(accountInfo.account, req)
         memberApiService.createMember(accountInfo.account, team, Role.ROLE_LEADER)
         return ResponseEntity (
-            SuccessResponse(ResponseCode.CREATED.code, ResponseCode.CREATED.status, "팀이 정상적으로 생성되었습니다."),
+            SuccessResponse(ResponseCode.CREATED.code, ResponseCode.CREATED.status, team.id.toString()),
             HttpStatus.CREATED
         )
     }
