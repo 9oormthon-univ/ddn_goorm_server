@@ -18,6 +18,7 @@ class CorsConfig {
         config.addAllowedOrigin("http://localhost:3001")
         config.addAllowedOrigin("https://ddngoorm.xyz/")
         config.addAllowedOrigin("https://www.ddngoorm.xyz")
+        config.addAllowedOrigin("chrome-extension://mbpielimoidogjhchdiedeocmofccbnp")
         config.addAllowedHeader("*")
         config.addAllowedMethod("*")
         source.registerCorsConfiguration("/**", config)

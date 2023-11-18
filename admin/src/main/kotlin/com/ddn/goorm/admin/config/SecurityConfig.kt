@@ -59,7 +59,9 @@ class SecurityConfig (
     fun corsConfigurationSource(
     ) : CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:3000", "http://localhost:8080", "https://www.ddngoorm.xyz", "https://ddngoorm.xyz")
+        configuration.allowedOrigins = listOf("http://localhost:3000", "http://localhost:8080",
+            "https://www.ddngoorm.xyz", "https://ddngoorm.xyz",
+            "chrome-extension://mbpielimoidogjhchdiedeocmofccbnp")
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE")
         configuration.allowedHeaders =
             listOf("Origin", "X-Requested-With", "Content-Type", "Authorization", "Oauth-Token")
