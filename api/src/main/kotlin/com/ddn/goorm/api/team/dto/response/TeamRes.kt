@@ -9,8 +9,8 @@ class TeamRes (
 ) {
     val id = team.id
     val name = team.name
-    val detail = team.detail
     val icon = team.icon
     val status = team.status
     val topics = team.topics!!.stream().map { it -> TopicRes(it) }.toList()
+    val goormCount = team.topics?.flatMap { it.goorms.orEmpty() }?.size ?: 0
 }

@@ -41,4 +41,8 @@ class GoormApiService (
         val goorm: Goorm = goormDomainService.findById(id)
         goormDomainService.updateGoormFinStatus(goorm)
     }
+
+    fun findGoorm(goorm: Long): GoormRes {
+        return GoormRes(goormDomainService.findById(goorm));
+    }
 }

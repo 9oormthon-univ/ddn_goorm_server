@@ -3,6 +3,7 @@ package com.ddn.goorm.domains.group.topic
 import com.ddn.goorm.common.enums.Status
 import com.ddn.goorm.domains.BaseEntity
 import com.ddn.goorm.domains.group.team.Team
+import com.ddn.goorm.domains.post.goorm.Goorm
 import javax.persistence.*
 
 @Entity
@@ -24,4 +25,9 @@ class Topic (
     @JoinColumn(name = "team")
     var team: Team? = null
 ) : BaseEntity() {
+    @OneToMany(
+        mappedBy = "topic",
+        cascade = [CascadeType.ALL]
+    )
+    var goorms: List<Goorm>? = null
 }
