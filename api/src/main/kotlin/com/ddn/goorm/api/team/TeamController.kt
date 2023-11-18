@@ -107,7 +107,7 @@ class TeamController (
     ): ResponseEntity<SuccessResponse> {
         memberApiService.createMember(
             accountApiService.findAccountByEmail(req.email),
-            teamApiService.findTeamById(req.team),
+            accountInfo.member?.team!!,
             Role.ROLE_MEMBER
         )
 
