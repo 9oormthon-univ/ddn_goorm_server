@@ -6,7 +6,6 @@ import com.ddn.goorm.api.topic.dto.request.TopicCreateReq
 import com.ddn.goorm.api.topic.dto.response.TopicRes
 import com.ddn.goorm.common.response.ResponseCode
 import com.ddn.goorm.common.response.SuccessResponse
-import com.ddn.goorm.domains.account.Account
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -35,7 +34,7 @@ class TopicController (
         @AuthAccount accountInfo: AuthAccountInfo,
         @RequestBody req: TopicCreateReq
     ) : ResponseEntity<SuccessResponse> {
-        topicApiService.createTopic(req)
+        topicApiService.createTopic(accountInfo.member?.team, req)
         return ResponseEntity(
             SuccessResponse(
                 code = ResponseCode.CREATED.code,
